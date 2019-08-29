@@ -1,46 +1,49 @@
 pipeline {
-
-  environment {
-    registry = "192.168.1.81:5000/justme/myweb"
-    dockerImage = ""
-  }
-
-  agent any
-
-  stages {
-
-    stage('Checkout Source') {
-      steps {
-        git 'https://github.com/justmeandopensource/playjenkins.git'
-      }
+    agent any
+    environment {
+        DOCKER_IMAGE_NAME = "sunnynehar56/simpleweb"
     }
-
-    stage('Build image') {
-      steps{
-        script {
-          dockerImage = docker.build registry + ":$BUILD_NUMBER"
+    stages{
+        stage('Build docker image') {
+            when {
+                branch 'master'
+            }
+            steps {
+                script {
+                    docker_image = docker.build(DOCKER_IMAGE_NAME)
+                    docker_image.inside {
+                        //we are running a small test to check if everything working fine.
+                        sh 'echo Hello,world'
+                    }
+                }
+            }
         }
-      }
-    }
-
-    stage('Push Image') {
-      steps{
-        script {
-          docker.withRegistry( "" ) {
-            dockerImage.push()
-          }
+        stage ('push Docker image') {
+            when {
+                branch 'master'
+            }
+            steps {
+                script {
+                    docker.withRegistry('https://registry.hub.docker.com', 'docker_hub_login') {
+                        docker_image.push("${env.BUILD_NUMBER}")
+                        docker_image.push("latest")
+                    }
+                }
+            }
         }
-      }
-    }
-
-    stage('Deploy App') {
-      steps {
-        script {
-          kubernetesDeploy(configs: "myweb.yaml", kubeconfigId: "mykubeconfig")
+        stage('DeployToProduction') {
+            when {
+                branch 'master'
+            }
+            steps {
+                input 'Deploy to Production?'
+                milestone(1)
+                kubernetesDeploy(
+                    kubeconfigId: 'kubeconfig',
+                    configs: 'myweb.yaml',
+                    enableConfigSubstitution: true
+                )
+            }
         }
-      }
     }
-
-  }
-
 }
