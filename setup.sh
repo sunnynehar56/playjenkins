@@ -1,5 +1,8 @@
 #/bin/sh
 
+echo "Install git"
+yum install -y git
+
 echo "Install Docker CE"
 yum update -y
 yum install docker -y
