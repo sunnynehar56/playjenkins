@@ -4,6 +4,16 @@ pipeline {
         DOCKER_IMAGE_NAME = "sunnynehar56/simpleweb"
     }
     stages{
+         stage('installing docker and git') {
+            steps {
+                timeout(time: 3, unit: 'MINUTES') {
+                    retry(5) {
+                        sh './setup.sh'
+                        sh 'sudo docker --version'
+                    }
+                }
+            }
+        }
         stage('Build docker image') {
             when {
                 branch 'master'
