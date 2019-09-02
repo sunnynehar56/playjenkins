@@ -18,8 +18,8 @@ pipeline {
             }
             steps {
                 script {
-                    docker_image = docker.build(DOCKER_IMAGE_NAME)
-                    docker_image.inside {
+                    app = docker.build(DOCKER_IMAGE_NAME)
+                    app.inside {
                         //we are running a small test to check if everything working fine.
                         sh 'echo Hello,world'
                     }
@@ -33,8 +33,8 @@ pipeline {
             steps {
                 script {
                     docker.withRegistry('https://registry.hub.docker.com', 'docker_hub_login') {
-                        docker_image.push("${env.BUILD_NUMBER}")
-                        docker_image.push("latest")
+                        app.push("${env.BUILD_NUMBER}")
+                        app.push("latest")
                     }
                 }
             }
