@@ -3,7 +3,15 @@ pipeline {
     environment {
         DOCKER_IMAGE_NAME = "sunnynehar56/simpleweb"
     }
-    stages{
+    stages {
+        stage('Checkout Source') {
+            when {
+                branch 'master'
+            }
+            steps {
+                git 'https://github.com/justmeandopensource/playjenkins.git'
+            }
+        }    
         stage('Build docker image') {
             when {
                 branch 'master'
