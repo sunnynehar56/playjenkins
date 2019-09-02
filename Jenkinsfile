@@ -9,7 +9,7 @@ pipeline {
                 branch 'master'
             }
             steps {
-                git 'https://github.com/justmeandopensource/playjenkins.git'
+                git 'https://github.com/sunnynehar56/playjenkins.git'
             }
         }    
         stage('Build docker image') {
