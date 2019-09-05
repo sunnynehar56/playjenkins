@@ -44,6 +44,7 @@ pipeline {
                 input 'Deploy to Production?'
                 milestone(1)
                 kubernetesDeploy(
+                    // kube config should be given in the jenkins credentials with same name 'kubeconfig'
                     kubeconfigId: 'kubeconfig',
                     configs: 'myweb.yaml',
                     enableConfigSubstitution: true
