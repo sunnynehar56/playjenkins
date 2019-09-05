@@ -22,13 +22,14 @@ pipeline {
                 }
             }
         }
-        stage ('push Docker image') {
+        stage ('push Docker image to nexus') {
             when {
                 branch 'master'
             }
             steps {
                 script {
-                    docker.withRegistry('https://registry.hub.docker.com', 'docker_hub_login') {
+                    docker.withRegistry('https://registry-1docker.io', 'nexus-login') {
+                        // nexus login should be given in the jenkins credentials with same name 'nexus-login'
                         app.push("${env.BUILD_NUMBER}")
                         app.push("latest")
                     }
