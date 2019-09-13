@@ -28,9 +28,11 @@ spec:
     stages {       
         stage('Build docker image') {        
             steps {
+                container('docker') {
                 script {
                     app = docker.build(DOCKER_IMAGE_NAME)
                 }
+               }
             }
         }
         stage ('push Docker image to nexus') {
