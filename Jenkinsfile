@@ -23,7 +23,7 @@ spec:
     }
   }
     environment {
-        DOCKER_IMAGE_NAME = "sunnynehar56/simpleweb"
+        DOCKER_IMAGE_NAME = "docker-registry"
     }
     stages {       
         stage('Build docker image') {        
