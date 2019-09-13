@@ -10,8 +10,8 @@ metadata:
     some-label: some-label-value
 spec:
   containers:
-  - name: maven
-    image: maven:alpine
+  - name: docker
+    image: docker:latest
     command:
     - cat
     tty: true
