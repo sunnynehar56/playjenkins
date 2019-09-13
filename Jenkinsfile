@@ -1,5 +1,7 @@
 pipeline {
-    agent any
+    agent {
+        label 'maven'
+    }
     environment {
         DOCKER_IMAGE_NAME = "sunnynehar56/simpleweb"
     }
