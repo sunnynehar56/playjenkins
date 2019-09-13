@@ -1,7 +1,28 @@
 pipeline {
     agent {
-        label 'maven'
+    kubernetes {
+      defaultContainer 'jnlp'
+      yaml """
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    some-label: some-label-value
+spec:
+  containers:
+  - name: maven
+    image: maven:alpine
+    command:
+    - cat
+    tty: true
+  - name: busybox
+    image: busybox
+    command:
+    - cat
+    tty: true
+"""
     }
+  }
     environment {
         DOCKER_IMAGE_NAME = "sunnynehar56/simpleweb"
     }
