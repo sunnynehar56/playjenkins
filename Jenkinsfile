@@ -35,10 +35,7 @@ spec:
                }
             }
         }
-        stage ('push Docker image to nexus') {
-            when {
-                branch 'master'
-            }
+        stage ('push Docker image to nexus') {          
             steps {
                  sh 'docker login -u ${AWSECRUserName} -p ${AWSECRPassword} https://187498025781.dkr.ecr.eu-west-1.amazonaws.com'
                  sh 'docker tag app 187498025781.dkr.ecr.eu-west-1.amazonaws.com/docker-registry'
