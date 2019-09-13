@@ -27,11 +27,9 @@ pipeline {
                 branch 'master'
             }
             steps {
-                script {
-                    docker login -u ${AWSECRUserName} -p ${AWSECRPassword} https://187498025781.dkr.ecr.eu-west-1.amazonaws.com
-                    docker tag app 187498025781.dkr.ecr.eu-west-1.amazonaws.com/docker-registry
-                    docker push 187498025781.dkr.ecr.eu-west-1.amazonaws.com/docker-registry                                    
-                }
+                 sh 'docker login -u ${AWSECRUserName} -p ${AWSECRPassword} https://187498025781.dkr.ecr.eu-west-1.amazonaws.com'
+                 sh 'docker tag app 187498025781.dkr.ecr.eu-west-1.amazonaws.com/docker-registry'
+                 sh 'docker push 187498025781.dkr.ecr.eu-west-1.amazonaws.com/docker-registry'                                 
             }
         }       
   
