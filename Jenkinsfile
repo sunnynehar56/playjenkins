@@ -28,28 +28,12 @@ pipeline {
             }
             steps {
                 script {
-                    docker.withRegistry('https://registry-1docker.io', 'nexus-login') {
-                        // nexus login should be given in the jenkins credentials with same name 'nexus-login'
-                        app.push("${env.BUILD_NUMBER}")
-                        app.push("latest")
-                    }
+                    docker login -u ${AWSECRUserName} -p ${AWSECRPassword} https://187498025781.dkr.ecr.eu-west-1.amazonaws.com
+                    docker tag app 187498025781.dkr.ecr.eu-west-1.amazonaws.com/docker-registry
+                    docker push 187498025781.dkr.ecr.eu-west-1.amazonaws.com/docker-registry                                    
                 }
             }
-        }
-        stage('DeployToProduction') {
-            when {
-                branch 'master'
-            }
-            steps {
-                input 'Deploy to Production?'
-                milestone(1)
-                kubernetesDeploy(
-                    // kube config should be given in the jenkins credentials with same name 'kubeconfig'
-                    kubeconfigId: 'kubeconfig',
-                    configs: 'myweb.yaml',
-                    enableConfigSubstitution: true
-                )
-            }
-        }
+        }       
+  
     }
 }
