@@ -23,7 +23,7 @@ spec:
     }
   }
     environment {
-        DOCKER_IMAGE_NAME = "docker-registry"
+        DOCKER_IMAGE_NAME = "docker-registry:1.2"
     }
     stages {       
         stage('Build docker image') {        
