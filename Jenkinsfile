@@ -43,7 +43,7 @@ spec:
                  //sh 'docker push 187498025781.dkr.ecr.eu-west-1.amazonaws.com/docker-registry' 
                     script {
                         docker.withRegistry('https://187498025781.dkr.ecr.eu-west-1.amazonaws.com', 'ecr:eu-west-1:awscredentials') {
-                        docker.image(DOCKER_IMAGE_NAME).push('latest')                          
+                        docker.image(DOCKER_IMAGE_NAME).push('1.2')                          
                         }
                     }
                 }
