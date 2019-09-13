@@ -26,19 +26,8 @@ spec:
     environment {
         DOCKER_IMAGE_NAME = "sunnynehar56/simpleweb"
     }
-    stages {
-        stage('Checkout Source') {
-            when {
-                branch 'master'
-            }
-            steps {
-                git 'https://github.com/sunnynehar56/playjenkins.git'
-            }
-        }    
-        stage('Build docker image') {
-            when {
-                branch 'master'
-            }
+    stages {       
+        stage('Build docker image') {        
             steps {
                 script {
                     app = docker.build(DOCKER_IMAGE_NAME)
