@@ -52,10 +52,10 @@ spec:
                     sh 'ls'                
                     kubernetesDeploy(
                     kubeconfigId: 'kubeconfig',
-                    configs: 'myweb.yaml',
+                    configs: '*.yaml',
                     enableConfigSubstitution: true,
                     secretNamespace: 'staging',
-                    secretName: ''
+                    secretName: 'build-robot-secret'
                     )                
                 }
             }
