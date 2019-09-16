@@ -53,7 +53,7 @@ spec:
                     kubeconfigId: 'kubeconfig',
                     configs: 'myweb.yaml',
                     enableConfigSubstitution: true,
-                    secretNamespace: 'staging',
+                    secretNamespace: 'default',
                     secretName: ''
                     )                
                 }
