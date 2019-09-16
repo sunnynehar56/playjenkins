@@ -45,7 +45,18 @@ spec:
                     }
                 }
             }
-        }       
+        }   
+        stage ('Deploy to Staging') {          
+            steps {
+                container('docker') {                 
+                    kubernetesDeploy(
+                    kubeconfigId: 'kubeconfig',
+                    configs: 'myweb.yaml',
+                    enableConfigSubstitution: true
+                    )                
+                }
+            }
+        }           
   
     }
 }
