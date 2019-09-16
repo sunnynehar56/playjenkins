@@ -4,7 +4,6 @@ apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
   name: simple-web
-  namespace: staging
   labels:
     app: myweb
 spec:
