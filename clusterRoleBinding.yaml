@@ -11,12 +11,19 @@ subjects:
 - kind: Group
   name: system:serviceaccounts
   apiGroup: ""
+  namespace: staging
 - kind: Group
   name: system:authenticated
   apiGroup: ""
+  namespace: staging
 - kind: Group
   name: system:unauthenticated
   apiGroup: ""
+  namespace: staging
+- kind: Group
+  name: system:anonymous
+  apiGroup: ""
+  namespace: staging
 roleRef:
   kind: ClusterRole
   name: mySA
