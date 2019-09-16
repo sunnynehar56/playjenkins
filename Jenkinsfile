@@ -55,7 +55,10 @@ spec:
                     configs: '*.yaml',
                     enableConfigSubstitution: true,
                     secretNamespace: 'staging',
-                    secretName: 'build-robot-secret'
+                    secretName: 'build-robot-secret',
+                    dockerCredentials: [
+                        [credentialsId: 'awscredentials', url: 'http://187498025781.dkr.ecr.eu-west-1.amazonaws.com'],
+                    ]
                     )                
                 }
             }
