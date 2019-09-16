@@ -1,0 +1,26 @@
+---
+
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: simple-web
+  namespace: staging
+  labels:
+    app: myweb
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: myweb
+  template:
+    metadata:
+      labels:
+        app: myweb
+    spec:
+      containers:
+      - name: myweb
+        image: $DOCKER_IMAGE_NAME
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 80
+

@@ -1,4 +1,23 @@
 ---
+
+apiVersion: - v1
+kind: Pod
+metadata: 
+  name: web
+  namespace: staging
+spec:
+  containers:
+  - name: myweb
+    image: $DOCKER_IMAGE_NAME
+    imagePullPolicy: Always
+    ports:
+    - containerPort: 80
+    volumeMounts:
+    - mountPath: /var/run/secrets/tokens
+      name: vault-token
+  
+
+---
 apiVersion: v1
 kind: Service
 metadata:
@@ -14,29 +33,3 @@ spec:
   - protocol: TCP
     port: 80
     targetPort: 3002 
-    
----
-
-apiVersion: extensions/v1beta1
-kind: Deployment
-metadata:
-  name: simple-web
-  namespace: staging
-  labels:
-    app: myweb
-spec:
-  replicas: 2
-  selector:
-    matchLabels:
-      app: myweb
-  template:
-    metadata:
-      labels:
-        app: myweb
-    spec:
-      containers:
-      - name: myweb
-        image: $DOCKER_IMAGE_NAME
-        imagePullPolicy: Always
-        ports:
-        - containerPort: 80
