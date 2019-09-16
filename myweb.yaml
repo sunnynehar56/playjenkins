@@ -18,7 +18,7 @@ spec:
 ---
 
 apiVersion: extensions/v1beta1
-kind: Pod
+kind: Deployment
 metadata:
   name: simple-web
   namespace: staging
