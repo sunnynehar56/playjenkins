@@ -53,9 +53,7 @@ spec:
                     kubernetesDeploy(
                     kubeconfigId: 'kubeconfig',
                     configs: 'myweb.yaml',
-                    enableConfigSubstitution: true,
-                    secretNamespace: 'staging',
-                    secretName: 'build-robot-secret',
+                    enableConfigSubstitution: false,
                     dockerCredentials: [
                         [credentialsId: 'ecr:eu-west-1:awscredentials', url: 'https://187498025781.dkr.ecr.eu-west-1.amazonaws.com'],
                     ]
