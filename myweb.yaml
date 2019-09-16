@@ -6,13 +6,13 @@ metadata:
   labels:
     app: myweb
 spec:
-  type: NodePort
+  type: LoadBalancer
   selector:
     app: myweb
   ports:
   - protocol: TCP
     port: 80
-    nodePort: 32223 
+    targetPort: 3002 
     
 ---
 
@@ -34,7 +34,7 @@ spec:
     spec:
       containers:
       - name: myweb
-        image: $DOCKER_IMAGE_NAME:$BUILD_NUMBER
+        image: $DOCKER_IMAGE_NAME
         imagePullPolicy: Always
         ports:
         - containerPort: 80
