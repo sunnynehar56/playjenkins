@@ -15,21 +15,3 @@ spec:
     volumeMounts:
     - mountPath: /var/run/secrets/tokens
       name: vault-token
-  
-
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: myweb
-  namespace: staging
-  labels:
-    app: myweb
-spec:
-  type: LoadBalancer
-  selector:
-    app: myweb
-  ports:
-  - protocol: TCP
-    port: 80
-    targetPort: 3002 
