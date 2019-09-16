@@ -48,7 +48,8 @@ spec:
         }   
         stage ('Deploy to Staging') {          
             steps {
-                container('docker') {                 
+                container('docker') { 
+                    sh 'ls'                
                     kubernetesDeploy(
                     kubeconfigId: 'kubeconfig',
                     configs: 'myweb.yaml',
