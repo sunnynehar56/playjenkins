@@ -57,7 +57,7 @@ spec:
                     secretNamespace: 'staging',
                     secretName: 'build-robot-secret',
                     dockerCredentials: [
-                        [credentialsId: 'awscredentials', url: 'http://187498025781.dkr.ecr.eu-west-1.amazonaws.com'],
+                        [credentialsId: 'ecr:eu-west-1:awscredentials', url: 'https://187498025781.dkr.ecr.eu-west-1.amazonaws.com'],
                     ]
                     )                
                 }
