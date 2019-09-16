@@ -52,7 +52,9 @@ spec:
                     kubernetesDeploy(
                     kubeconfigId: 'kubeconfig',
                     configs: 'myweb.yaml',
-                    enableConfigSubstitution: true
+                    enableConfigSubstitution: true,
+                    secretNamespace: 'staging',
+                    secretName: ''
                     )                
                 }
             }

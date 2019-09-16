@@ -1,0 +1,23 @@
+apiVersion: rbac.authorization.k8s.io/v1
+# This cluster role binding allows anyone in the "manager" group to read secrets in any namespace.
+kind: ClusterRoleBinding
+metadata:
+  name: mySA
+subjects:
+- kind: ServiceAccount
+  name: default # Name is case sensitive
+  namespace: kube-system
+  apiGroup: ""
+- kind: Group
+  name: system:serviceaccounts
+  apiGroup: ""
+- kind: Group
+  name: system:authenticated
+  apiGroup: ""
+- kind: Group
+  name: system:unauthenticated
+  apiGroup: ""
+roleRef:
+  kind: ClusterRole
+  name: mySA
+  apiGroup: rbac.authorization.k8s.io
