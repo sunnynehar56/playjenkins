@@ -1,5 +1,5 @@
 pipeline {
-    agent any 
+    agent  
     environment {
         DOCKER_IMAGE_NAME = "docker-registry:1.2"
     }
@@ -13,7 +13,7 @@ pipeline {
                }
             }
         }
-        stage ('push Docker image to nexus') {          
+        stage ('push Docker image to aws ecr') {          
             steps {
                 container('docker') {                 
                     script {
