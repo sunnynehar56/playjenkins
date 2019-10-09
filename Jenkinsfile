@@ -1,9 +1,9 @@
 pipeline {
-    agent {
-    kubernetes {
+  agent {
+  kubernetes {
       //cloud 'kubernetes'
-      defaultContainer 'jnlp'
-      yaml """
+  label 'mypod'
+  yaml """
 apiVersion: v1
 kind: Pod
 spec:
