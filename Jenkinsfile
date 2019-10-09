@@ -1,6 +1,5 @@
 pipeline {
-    agent {
-  }
+    agent any
     environment {
         DOCKER_IMAGE_NAME = "docker-registry:1.2"
     }
