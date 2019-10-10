@@ -1,5 +1,5 @@
 pipeline {
-  agent any 
+  agent jnlp 
     environment {
         DOCKER_IMAGE_NAME = "docker-registry:1.2"
     }
