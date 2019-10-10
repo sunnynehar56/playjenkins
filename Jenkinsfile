@@ -8,6 +8,10 @@ apiVersion: v1
 kind: Pod
 spec:
   containers:
+  - name: kubectl
+    image: lachlanevenson/k8s-kubectl
+    command: ['cat']
+    tty: true
   - name: docker
     image: docker:1.11
     command: ['cat']
@@ -48,19 +52,13 @@ spec:
         }   
         stage ('Deploy to Staging') {          
             steps {
-                container('docker') { 
-                    sh 'ls'                
-                    kubernetesDeploy(
-                    //kubeconfigId: 'kubeconfig',
-                    withCredentials([kubeconfigContent(credentialsId: 'kubeconfig', variable: 'KUBECONFIG_CONTENT')]) {
-                        sh '''echo "$KUBECONFIG_CONTENT" > kubeconfig && cat kubeconfig && rm kubeconfig'''
-                    },
-                    configs: 'myweb.yaml',
-                    enableConfigSubstitution: true,
-                    dockerCredentials: [
-                        [credentialsId: 'ecr:eu-west-1:awscredentials', url: 'https://187498025781.dkr.ecr.eu-west-1.amazonaws.com'],
-                    ]
-                    )                
+                container('kubectl') { 
+                    script {
+
+                        withKubeConfig([credentialsId: 'k8ssvcaccount', serverUrl: 'https://70B4D06120D06637B6DCA508BCC00B56.sk1.eu-west-1.eks.amazonaws.com', namespace: 'jenkins', clusterName: 'eks-cluster@myeks.eu-west-1.eksctl.io', contextName: 'eks-cluster@myeks.eu-west-1.eksctl.io']) {
+                            sh 'kubectl apply -f myweb.yaml'
+                        }
+                    }
                 }
             }
         }           
