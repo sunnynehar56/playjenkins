@@ -51,9 +51,12 @@ spec:
                 container('docker') { 
                     sh 'ls'                
                     kubernetesDeploy(
-                    kubeconfigId: 'kubeconfig',
+                    //kubeconfigId: 'kubeconfig',
+                    withCredentials([kubeconfigContent(credentialsId: 'kubeconfig', variable: 'KUBECONFIG_CONTENT')]) {
+                        sh '''echo "$KUBECONFIG_CONTENT" > kubeconfig && cat kubeconfig && rm kubeconfig'''
+                    }
                     configs: 'myweb.yaml',
-                    enableConfigSubstitution: false,
+                    enableConfigSubstitution: true,
                     dockerCredentials: [
                         [credentialsId: 'ecr:eu-west-1:awscredentials', url: 'https://187498025781.dkr.ecr.eu-west-1.amazonaws.com'],
                     ]
