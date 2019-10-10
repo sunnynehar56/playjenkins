@@ -2,7 +2,7 @@ pipeline {
   agent {
     kubernetes {
       //cloud 'kubernetes'
-      label 'mypod'
+      label 'docker'
       yaml """
 apiVersion: v1
 kind: Pod
