@@ -1,9 +1,9 @@
 pipeline {
   agent {
-  kubernetes {
+    kubernetes {
       //cloud 'kubernetes'
-  label 'mypod'
-  yaml """
+      label 'mypod'
+      yaml """
 apiVersion: v1
 kind: Pod
 spec:
@@ -29,6 +29,7 @@ spec:
         stage('Build docker image') {        
             steps {
                 container('docker') {
+                  sh 'docker version'
                 script {
                     app = docker.build(DOCKER_IMAGE_NAME)
                 }
