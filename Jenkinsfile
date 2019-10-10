@@ -54,7 +54,6 @@ spec:
             steps {
                 container('kubectl') { 
                     script {
-
                         withKubeConfig([credentialsId: 'k8ssvcaccount', serverUrl: 'https://70B4D06120D06637B6DCA508BCC00B56.sk1.eu-west-1.eks.amazonaws.com', namespace: 'jenkins', clusterName: 'eks-cluster@myeks.eu-west-1.eksctl.io', contextName: 'eks-cluster@myeks.eu-west-1.eksctl.io']) {
                             sh 'kubectl apply -f myweb.yaml'
                         }
