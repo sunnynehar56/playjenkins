@@ -16,3 +16,4 @@ Plugins to be added in jenkins
 
 login to ecr with 
 ➜  $(aws ecr get-login --no-include-email --region eu-west-1)
+the end
