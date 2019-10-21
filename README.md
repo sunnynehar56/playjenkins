@@ -13,3 +13,6 @@ Plugins to be added in jenkins
 - aws code deploy plugin
 - kubernetes continours plugin
 - amazon ECR
+
+login to ecr with 
+➜  $(aws ecr get-login --no-include-email --region eu-west-1)
