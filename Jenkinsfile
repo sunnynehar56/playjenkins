@@ -27,7 +27,7 @@ spec:
       }
     }
     environment {
-        DOCKER_IMAGE_NAME = "docker-registry:1.3"
+        DOCKER_IMAGE_NAME = "docker-registry:1.2"
     }
     stages {       
         stage('Build docker image') {        
@@ -44,7 +44,7 @@ spec:
                 container('docker') {                 
                     script {
                         docker.withRegistry('https://187498025781.dkr.ecr.eu-west-1.amazonaws.com', 'ecr:eu-west-1:awscredentials') {
-                        docker.image(DOCKER_IMAGE_NAME).push('1.3')                          
+                        docker.image(DOCKER_IMAGE_NAME).push('1.2')                          
                         }
                     }
                 }
