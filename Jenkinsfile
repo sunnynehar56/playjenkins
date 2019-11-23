@@ -8,10 +8,6 @@ apiVersion: v1
 kind: Pod
 spec:
   containers:
-  - name: kubectl
-    image: lachlanevenson/k8s-kubectl
-    command: ['cat']
-    tty: true
   - name: docker
     image: docker:1.11
     command: ['cat']
@@ -19,6 +15,10 @@ spec:
     volumeMounts:
     - name: dockersock
       mountPath: /var/run/docker.sock
+  - name: kubectl
+    image: lachlanevenson/k8s-kubectl
+    command: ['cat']
+    tty: true
   volumes:
   - name: dockersock
     hostPath:
