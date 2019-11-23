@@ -29,8 +29,8 @@ spec:
     environment {
         DOCKER_IMAGE_NAME = "docker-registry:1.3"
     }
-    stages {       
-        stage('Build docker image') {        
+    stages {
+        stage('Build docker image') {
             steps {
                 container('docker') {
                 script {
@@ -40,4 +40,4 @@ spec:
             }
         }
     }
-}    
+}
