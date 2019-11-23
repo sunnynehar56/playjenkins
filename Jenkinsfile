@@ -1,29 +1,9 @@
 pipeline {
     agent {
       kubernetes {
-      //cloud 'kubernetes'
-        //label 'mypod'
-        yaml """
-apiVersion: v1
-kind: Pod
-spec:
-  containers:
-  - name: docker
-    image: docker:1.11
-    command: ['cat']
-    tty: true
-    volumeMounts:
-    - name: dockersock
-      mountPath: /var/run/docker.sock
-  - name: kubectl
-    image: lachlanevenson/k8s-kubectl
-    command: ['cat']
-    tty: true
-  volumes:
-  - name: dockersock
-    hostPath:
-      path: /var/run/docker.sock
-"""
+        idleMinutes 5
+        yamlFile 'build-pod.yaml'
+        defaultContainer 'docker'
       }
     }
     environment {
