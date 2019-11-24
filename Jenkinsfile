@@ -1,25 +1,66 @@
 pipeline {
-  agent {
-    kubernetes {
-      label 'promo-app'  // all your pods will be named with this prefix, followed by a unique id
-      idleMinutes 5  // how long the pod will live after no jobs have run on it
-      yamlFile 'build-pod.yaml'  // path to the pod definition relative to the root of our project 
-      defaultContainer 'maven'  // define a default container if more than a few stages use it, will default to jnlp container
-    }
-  }
-  stages {
-    stage('Build') {
-      steps {  // no container directive is needed as the maven container is the default
-        sh "mvn clean install"   
+    agent {
+      kubernetes {
+      //cloud 'kubernetes'
+        //label 'mypod'
+        yaml """
+apiVersion: v1
+kind: Pod
+spec:
+  containers:
+  - name: kubectl
+    image: lachlanevenson/k8s-kubectl
+    command: ['cat']
+    tty: true
+  - name: docker
+    image: docker:1.11
+    command: ['cat']
+    tty: true
+    volumeMounts:
+    - name: dockersock
+      mountPath: /var/run/docker.sock
+  volumes:
+  - name: dockersock
+    hostPath:
+      path: /var/run/docker.sock
+"""
       }
     }
-    stage('Build Docker Image') {
-      steps {
-        container('docker') {  
-          sh "docker build -t vividseats/promo-app:dev ."  // when we run docker in this step, we're running it via a shell on the docker build-pod container, 
-          sh "docker push vividseats/promo-app:dev"        // which is just connecting to the host docker deaemon
+    environment {
+        DOCKER_IMAGE_NAME = "docker-registry:1.3"
+    }
+    stages {       
+        stage('Build docker image') {        
+            steps {
+                container('docker') {
+                script {
+                    app = docker.build(DOCKER_IMAGE_NAME)
+                }
+               }
+            }
         }
-      }
+        stage ('push Docker image to aws ecr') {          
+            steps {
+                container('docker') {                 
+                    script {
+                        docker.withRegistry('https://187498025781.dkr.ecr.eu-west-1.amazonaws.com', 'ecr:eu-west-1:awscredentials') {
+                        docker.image(DOCKER_IMAGE_NAME).push('1.3')                          
+                        }
+                    }
+                }
+            }
+        }   
+        stage ('Deploy to Staging') {          
+            steps {
+                container('kubectl') { 
+                    script {
+                        withKubeConfig([credentialsId: 'k8ssvcaccount', serverUrl: 'https://70B4D06120D06637B6DCA508BCC00B56.sk1.eu-west-1.eks.amazonaws.com', namespace: 'jenkins', clusterName: 'eks-cluster@myeks.eu-west-1.eksctl.io', contextName: 'eks-cluster@myeks.eu-west-1.eksctl.io']) {
+                            sh 'kubectl apply -f myweb.yaml'
+                        }
+                    }
+                }
+            }
+        }           
+  
     }
-  }
 }
